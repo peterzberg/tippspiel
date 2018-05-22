@@ -39,7 +39,7 @@ public class TournamentController {
         final TournamentDto tournament = tournamentService.getActiveTournamnet();
         model.addAttribute("tournament", tournament);
         appendGlobalData(model);
-        return "/admin/tournament";
+        return "admin/tournament";
     }
 
     @RequestMapping(value = "/admin/tournament", method = RequestMethod.POST)
@@ -47,7 +47,7 @@ public class TournamentController {
         LOGGER.debug("updating tournament");
         if (bindingResult.hasErrors()) {
             appendGlobalData(model);
-            return "/admin/tournament";
+            return "admin/tournament";
         }
         tournamentService.updateTournament(tournamentDto);
         return "redirect:/admin/overview";

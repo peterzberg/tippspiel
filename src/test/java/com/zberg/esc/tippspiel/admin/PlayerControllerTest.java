@@ -38,7 +38,7 @@ public class PlayerControllerTest {
         final String view = testee.playerForm(model, "12");
         // assert
         verify(tournamentService, never()).createNewPlayer();
-        assertEquals("/admin/player", view);
+        assertEquals("admin/player", view);
     }
 
     @Test
@@ -50,7 +50,7 @@ public class PlayerControllerTest {
         final String view = testee.playerForm(model, "12");
         // assert
         verify(tournamentService).createNewPlayer();
-        assertEquals("/admin/player", view);
+        assertEquals("admin/player", view);
     }
 
     @Test
@@ -61,7 +61,7 @@ public class PlayerControllerTest {
         final String view = testee.playerForm(model, null);
         // assert
         verify(tournamentService).createNewPlayer();
-        assertEquals("/admin/player", view);
+        assertEquals("admin/player", view);
     }
 
     @Test
@@ -75,7 +75,7 @@ public class PlayerControllerTest {
         final String view = testee.savePlayer(playerDto, bindingResult, model);
         // assert
         verify(tournamentService, never()).saveOrUpdatePlayer(playerDto);
-        assertEquals("/admin/player", view);
+        assertEquals("admin/player", view);
     }
 
     @Test

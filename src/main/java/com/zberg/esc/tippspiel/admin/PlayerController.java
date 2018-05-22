@@ -44,7 +44,7 @@ public class PlayerController {
         final PlayerDto result = initPlayer(playerId);
         model.addAttribute("player", result);
         appendGlobalData(model);
-        return "/admin/player";
+        return "admin/player";
     }
 
     private PlayerDto initPlayer(@RequestParam(name = "pid", required = false) String playerId) {
@@ -70,7 +70,7 @@ public class PlayerController {
         if (bindingResult.hasErrors()) {
             model.addAttribute("player", player);
             appendGlobalData(model);
-            return "/admin/player";
+            return "admin/player";
         }
         tournamentService.saveOrUpdatePlayer(player);
         return "redirect:/admin/overview";
