@@ -1,0 +1,1 @@
+insert into tournament (id, name, score_range) values ('esc-wc-2018-russia', 'World Cup 2018', null);

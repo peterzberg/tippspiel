@@ -1,0 +1,23 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Tippspiel: Übersicht</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="stylesheet" type="text/css" media="all"
+          href="../../static/admin/styles.css" th:href="@{/admin/styles.css}"/>
+</head>
+<body>
+<h1>Turnier bearbeiten</h1>
+<a th:href="@{/admin/tournament}">bearbeiten...</a>
+
+<h1>Alle Spieler</h1>
+</body>
+
+<table>
+    <tr th:each="player, stat : *{players}">
+        <td th:text="${player.firstname} + ' ' + ${player.lastname}">Playername</td>
+        <td><a th:href="@{/admin/player(pid=${player.id})}">bearbeiten...</a></td>
+    </tr>
+</table>
+
+</html>

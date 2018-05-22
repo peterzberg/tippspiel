@@ -1,0 +1,25 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Rangliste: Tippspiel: ${tournament.name}</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+</head>
+<body>
+<table>
+    <thead>
+    <tr>
+        <th>Rang</th>
+        <th>Name</th>
+        <th>Punkte</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="currentRanking, stat : *{ranking}">
+        <td th:text="${currentRanking.ranking}">1</td>
+        <td th:text="${currentRanking.player.lastname + ' ' + currentRanking.player.firstname}">Peter Zberg</td>
+        <td th:text="${currentRanking.score}">55</td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

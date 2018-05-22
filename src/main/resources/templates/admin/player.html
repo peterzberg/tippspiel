@@ -1,0 +1,77 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Tippspiel: Neuer Spieler</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="stylesheet" type="text/css" media="all"
+          href="../../static/admin/styles.css" th:href="@{/admin/styles.css}"/>
+</head>
+<body>
+<h1>Neuer Spieler erfassen</h1>
+<form action="#" th:action="@{/admin/player}" th:object="${player}" method="post">
+    <input type="hidden" th:field="*{tournamentId}"/>
+    <input type="hidden" th:field="*{id}"/>
+    <table>
+        <tr>
+            <td><label th:for="firstname">Vorname</label></td>
+            <td><input type="text" th:field="*{firstname}" th:errorClass="error"/></td>
+        </tr>
+        <tr>
+            <td><label th:for="lastname">Nachname</label></td>
+            <td><input type="text" th:field="*{lastname}" th:errorClass="error"/></td>
+        </tr>
+        <tr>
+            <td><label th:for="street">Strasse</label></td>
+            <td><input type="text" th:field="*{street}" th:errorClass="error"/></td>
+        </tr>
+        <tr>
+            <td><label th:for="zip">PLZ</label></td>
+            <td><input type="text" th:field="*{zip}" th:errorClass="error"/></td>
+        </tr>
+        <tr>
+            <td><label th:for="city">Ort</label></td>
+            <td><input type="text" th:field="*{city}" th:errorClass="error"/></td>
+        </tr>
+        <tr>
+            <td><label th:for="guessedChampion">Weltmeister</label></td>
+            <td>
+                <select th:field="*{guessedChampion}" id="guessedChampion" th:errorClass="error">
+                    <option value="-1" th:text="ausw&auml;hlen"></option>
+                    <option th:each="team : ${teams}" th:value="${team.id}" th:text="${team.name}"></option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td><label th:for="guessedTopScorer">Torsch&uuml;tzenk&ouml;nig</label></td>
+            <td><input type="text" th:field="*{guessedTopScorer}" th:errorClass="error"/></td>
+        </tr>
+        <tr>
+            <td><label th:for="scoreRange">Tore</label></td>
+            <td>
+                <ul>
+                    <li th:each="sr : ${scoreRanges}">
+                        <input type="radio" th:field="*{scoreRange}" th:value="${sr}" th:errorClass="error"/>
+                        <label th:for="${#ids.prev('scoreRange')}" th:text="${sr.text}">Wireframe</label>
+                    </li>
+                </ul>
+            </td>
+        </tr>
+    </table>
+
+    <table>
+        <tr th:each="currentBet, stat : *{bets}">
+            <td th:text="${currentBet.team1}">Team 1</td>
+            <td><input type="hidden" th:field="*{bets[__${stat.index}__].id}"/>
+                <input type="hidden" th:field="*{bets[__${stat.index}__].gameId}"/>
+                <input type="hidden" th:field="*{bets[__${stat.index}__].team1}"/>
+                <input type="hidden" th:field="*{bets[__${stat.index}__].team2}"/>
+                <input type="text" th:field="*{bets[__${stat.index}__].score1}" th:errorClass="error"/></td>
+            <td>:</td>
+            <td><input type="text" th:field="*{bets[__${stat.index}__].score2}" th:errorClass="error"/></td>
+            <td th:text="${currentBet.team2}">Team 2</td>
+        </tr>
+    </table>
+    <p><input type="submit" value="Submit"/></p>
+</form>
+</body>
+</html>

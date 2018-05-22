@@ -1,0 +1,15 @@
+input.error {
+    border-color: red;
+}
+
+select.error {
+    border-color: red;
+}
+
+li {
+    list-style: none;
+}
+
+input[type=radio].error {
+    outline: 1px solid red;
+}
