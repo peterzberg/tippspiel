@@ -116,4 +116,11 @@ class PlayerService {
                         }).collect(Collectors.toList()));
         return player;
     }
+
+    void delete(PlayerDto playerDto) {
+        playerRepository.findById(playerDto.getId()).ifPresent(p -> {
+            betRepository.deleteAll(p.getBets());
+            playerRepository.delete(p);
+        });
+    }
 }

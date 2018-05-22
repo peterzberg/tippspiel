@@ -76,6 +76,23 @@ public class PlayerController {
         return "redirect:/admin/overview";
     }
 
+    @RequestMapping(value = "/admin/playerdelete", method = RequestMethod.GET)
+    public String getPlayerToDelete(final Model model, @RequestParam(name = "pid") final String pid) {
+        LOGGER.debug("Going to delete player {}", pid);
+        if (StringUtils.isEmpty(pid) || !isLong(pid)) {
+            throw new IllegalArgumentException("no pid given");
+        }
+        model.addAttribute("player", tournamentService.loadPlayer(Long.valueOf(pid)));
+        return "admin/playerdelete";
+    }
+
+    @RequestMapping(value = "/admin/playerdelete", method = RequestMethod.POST)
+    public String deletePlayer(@ModelAttribute(name = "player") PlayerDto player) {
+        LOGGER.debug("Going to delete player {}", player);
+        tournamentService.delete(player);
+        return "redirect:/admin/overview";
+    }
+
     private void appendGlobalData(Model model) {
         final List<Team> allTeams = StreamSupport.stream(teamRepository.findAll().spliterator(), false)//
                 .sorted(Comparator.comparing(Team::getName)).collect(Collectors.toList());

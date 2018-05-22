@@ -1,0 +1,38 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Tippspiel: Spieler l&ouml;schen</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="stylesheet" type="text/css" media="all"
+          href="../../static/admin/styles.css" th:href="@{/admin/styles.css}"/>
+</head>
+<body>
+<h1>Spieler l&ouml;schen</h1>
+<h2>Bist du sicher?</h2>
+<form action="#" th:action="@{/admin/playerdelete}" th:object="${player}" method="post">
+    <input type="hidden" th:field="*{id}"/>
+    <table>
+        <tr>
+            <td><label th:for="firstname">Vorname:</label></td>
+            <td th:text="*{firstname}"></td>
+        </tr>
+        <tr>
+            <td><label th:for="lastname">Nachname:</label></td>
+            <td th:text="*{lastname}"></td>
+        </tr>
+        <tr>
+            <td><label th:for="street">Strasse</label></td>
+            <td th:text="*{street}"></td>
+        </tr>
+        <tr>
+            <td><label th:for="zip">PLZ</label></td>
+            <td th:text="*{zip}"></td>
+        </tr>
+        <tr>
+            <td><label th:for="city">Ort</label></td>
+            <td th:text="*{city}"></td>
+        </tr>
+    <p><input type="submit" value="L&ouml;schen"/></p>
+</form>
+</body>
+</html>

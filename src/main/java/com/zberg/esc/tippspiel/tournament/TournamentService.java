@@ -122,4 +122,7 @@ public class TournamentService {
     }
 
 
+    public void delete(PlayerDto player) {
+        playerService.delete(player);
+    }
 }

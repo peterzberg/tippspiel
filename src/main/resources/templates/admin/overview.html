@@ -12,11 +12,13 @@
 
 <h1>Alle Spieler</h1>
 </body>
-
+<a th:href="@{/admin/player}">Neuer Spieler erfassen...</a>
+<p></p>
 <table>
     <tr th:each="player, stat : *{players}">
         <td th:text="${player.firstname} + ' ' + ${player.lastname}">Playername</td>
         <td><a th:href="@{/admin/player(pid=${player.id})}">bearbeiten...</a></td>
+        <td><a th:href="@{/admin/playerdelete(pid=${player.id})}">l&ouml;schen</a></td>
     </tr>
 </table>
 
