@@ -80,6 +80,51 @@ public class ScoreCalculatorTest {
     }
 
     @Test
+    public void calculateScore_TwoNamesScoreMatchesCombination_10() {
+        // arrange
+        player.setGuessedTopScorer("Peter Zberg");
+        final Set<Scorer> scorers = new HashSet<>();
+        final Scorer scorer = new Scorer();
+        scorer.setName("Zberg Peter");
+        scorers.add(scorer);
+        tournament.setTopScorers(scorers);
+        // act
+        final Score result = testee.calculateScore(player);
+        // assert
+        assertEquals(10, result.getScore());
+    }
+
+    @Test
+    public void calculateScore_ThreeNamesscoreMatchesCombination_10() {
+        // arrange
+        player.setGuessedTopScorer("Peter Wu Zberg");
+        final Set<Scorer> scorers = new HashSet<>();
+        final Scorer scorer = new Scorer();
+        scorer.setName("Wu Zberg Peter");
+        scorers.add(scorer);
+        tournament.setTopScorers(scorers);
+        // act
+        final Score result = testee.calculateScore(player);
+        // assert
+        assertEquals(10, result.getScore());
+    }
+
+    @Test
+    public void calculateScore_ThreeNamesscoreMatchesCombinationIgnoreCase_10() {
+        // arrange
+        player.setGuessedTopScorer("peter WU zberg");
+        final Set<Scorer> scorers = new HashSet<>();
+        final Scorer scorer = new Scorer();
+        scorer.setName("WU ZBERG PETER");
+        scorers.add(scorer);
+        tournament.setTopScorers(scorers);
+        // act
+        final Score result = testee.calculateScore(player);
+        // assert
+        assertEquals(10, result.getScore());
+    }
+
+    @Test
     public void calculateScore_guessedScoreRange_10() {
         // arrange
         tournament.setScoreRange(ScoreRange.R_111_120);

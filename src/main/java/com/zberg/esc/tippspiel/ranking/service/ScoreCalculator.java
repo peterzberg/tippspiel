@@ -3,10 +3,7 @@ package com.zberg.esc.tippspiel.ranking.service;
 import com.zberg.esc.tippspiel.tournament.db.entities.*;
 import org.springframework.stereotype.Service;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 @Service
 class ScoreCalculator {
@@ -40,8 +37,57 @@ class ScoreCalculator {
         final String topScorer = player.getGuessedTopScorer();
 
         return Optional.ofNullable(tournameTopScorer).orElse(new HashSet<>())
-                .stream().anyMatch(ts -> ts.getName().equals(topScorer));
+                .stream().anyMatch(s -> nameMatches(s, topScorer));
     }
+
+    private boolean nameMatches(Scorer tournamentScorer, String topScorer) {
+        final String tournamentScorerName = tournamentScorer.getName();
+        if (tournamentScorerName.contains(" ")) {
+            final String[] split = tournamentScorerName.split(" ");
+            final List<String> combinations = determineAllNameCombinations(split);
+            return combinations.stream().anyMatch(c -> c.equalsIgnoreCase(topScorer));
+        } else {
+            return topScorer.equals(tournamentScorerName);
+        }
+    }
+
+
+    private List<String> determineAllNameCombinations(String[] arr) {
+        final List<String> result = new ArrayList<>();
+        determineAllNameCombinations(arr, 0, result);
+        return result;
+    }
+
+    private void determineAllNameCombinations(String[] arr, int index, final List<String> result) {
+        if (index >= arr.length - 1) { //if we are at the last element - nothing left to permute
+            final StringBuilder permutation = new StringBuilder();
+            for (int i = 0; i < arr.length - 1; i++) {
+                permutation.append(arr[i]).append(" ");
+            }
+            if (arr.length > 0) {
+                permutation.append(arr[arr.length - 1]);
+            }
+            result.add(permutation.toString());
+            return;
+        }
+
+        for (int i = index; i < arr.length; i++) { //For each index in the sub array arr[index...end]
+
+            //Swap the elements at indices index and i
+            String t = arr[index];
+            arr[index] = arr[i];
+            arr[i] = t;
+
+            //Recurse on the sub array arr[index+1...end]
+            determineAllNameCombinations(arr, index + 1, result);
+
+            //Swap the elements back
+            t = arr[index];
+            arr[index] = arr[i];
+            arr[i] = t;
+        }
+    }
+
 
     private int toScore(Bet bet) {
         final Game game = bet.getGame();

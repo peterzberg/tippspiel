@@ -19,6 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -94,7 +95,7 @@ public class TournamentService {
         }
         scorerRepository.deleteAll(tournament.getTopScorers());
         if (tournamentDto.getScorers() != null) {
-            tournamentDto.getScorers().forEach(s -> {
+            tournamentDto.getScorers().stream().filter(Objects::nonNull).forEach(s -> {
                 final Scorer scorer = new Scorer();
                 scorer.setTournament(tournament);
                 scorer.setName(s);

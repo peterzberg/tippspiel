@@ -13,6 +13,46 @@
                 radios[i].checked = false;
             }
         }
+
+        function getMaxScorerId(){
+            var textFields = document.querySelectorAll("#topscorer input[type=\"text\"]");
+            var max = 0;
+            if (textFields.length > 0){
+                for (var i = 0; i < textFields.length; i++){
+                    var textfield = textFields[i];
+                    console.log(textfield);
+                    var id = textfield.getAttribute('name');
+                    var tmpId = parseInt(id.substring(8, id.indexOf(']')));
+                    if (tmpId > max){
+                        max = tmpId;
+                    }
+                }
+            }
+            return max;
+        }
+
+        function deleteTopScorer(target){
+            console.log('delete: ' + target);
+            if (target){
+                var tr = target.parentNode.parentNode;
+                tr.remove();
+            }
+
+        }
+
+        function addNewTopScorer(){
+            var table = document.querySelector('#topscorer');
+            var newId = getMaxScorerId() + 1;
+            var tr = document.createElement("tr");
+            var td = document.createElement("td");
+            var textField = document.createElement('input');
+            textField.setAttribute('type', 'text');
+            textField.setAttribute('name', 'scorers[' + newId + ']');
+            textField.setAttribute('size', '100');
+            td.appendChild(textField);
+            tr.appendChild(td);
+            table.appendChild(tr);
+        }
     </script>
 </head>
 <body>
@@ -47,6 +87,16 @@
             </td>
         </tr>
     </table>
+    Topscrorer<button type="button" onclick="addNewTopScorer();">+</button>
+    <table id="topscorer">
+        <tr th:each="ts,stat : ${tournament.scorers}">
+            <td>
+                <input type="text" th:name="'scorers[' + ${stat.index} + ']'" th:value="${ts}" th:errorClass="error" size="100"/>
+                <button type="button" onclick="deleteTopScorer(this);">-</button>
+            </td>
+        </tr>
+    </table>
+    <p></p>
     <table>
         <tr th:each="currentGame, stat : *{games}">
             <td th:text="${currentGame.team1}">Team 1</td>
