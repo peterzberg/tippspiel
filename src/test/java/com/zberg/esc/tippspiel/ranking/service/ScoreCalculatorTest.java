@@ -125,6 +125,21 @@ public class ScoreCalculatorTest {
     }
 
     @Test
+    public void calculateScore_champtionGuessedCorrectly_25() {
+        // arrange
+        final Team guessedChamption = new Team();
+        guessedChamption.setId(15L);
+        player.setGuessedChampion(guessedChamption);
+        final Team realChamption = new Team();
+        realChamption.setId(15L);
+        tournament.setChampion(realChamption);
+        // act
+        final Score result = testee.calculateScore(player);
+        // assert
+        assertEquals(25, result.getScore());
+    }
+
+    @Test
     public void calculateScore_guessedScoreRange_10() {
         // arrange
         tournament.setScoreRange(ScoreRange.R_111_120);

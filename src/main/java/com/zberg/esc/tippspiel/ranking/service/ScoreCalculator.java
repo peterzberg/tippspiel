@@ -21,8 +21,21 @@ class ScoreCalculator {
             score += 10;
         }
 
+        if (isWinnerTeamCorrect(player)){
+            score += 25;
+        }
+
         return new Score(player, score);
 
+    }
+
+    private boolean isWinnerTeamCorrect(Player player) {
+        final Tournament tournament = player.getTournament();
+        final Team champion = tournament.getChampion();
+        if (null != champion && player.getGuessedChampion() != null){
+            return champion.getId().equals(player.getGuessedChampion().getId());
+        }
+        return false;
     }
 
     private boolean isTotalScoreRangeGuessedCorrectly(Player player) {
